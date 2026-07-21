@@ -1,7 +1,9 @@
 name: Generate and Sign MobileConfig
 on:
-  push:
-    branches: [ main ]
+  workflow_run:
+    workflows: ["update-mobileconfig"]  # Exact name of Workflow 1
+    types:
+      - completed
 
 permissions:
   contents: write
