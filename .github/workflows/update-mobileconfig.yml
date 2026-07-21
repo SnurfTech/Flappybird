@@ -1,0 +1,46 @@
+name: Update Mobileconfig
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+
+jobs:
+  sign:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # 1. Create a secure, independent local signing pair customized to YOU
+    - name: Generate Personalized Signing Pair
+      run: |
+        openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+          -keyout privkey.pem \
+          -out cert.pem \
+          -subj "/CN=snurftech.com/O=SnurfTech/OU=Mobile Deployments/C=US"
+
+    # 2. Package and cryptographically sign your unsigned file
+    - name: Sign Profile
+      run: |
+        openssl smime -sign \
+          -in unsigned.mobileconfig \
+          -out signed.mobileconfig \
+          -signer cert.pem \
+          -inkey privkey.pem \
+          -certfile cert.pem \
+          -outform DER -nodetach
+
+    # 3. Securely erase the temporary signing keys from the runner
+    - name: Clean Up Keys
+      run: rm privkey.pem cert.pem
+
+    # 4. Commit and overwrite the root file
+    - name: Commit Unsigned Profile
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add unsigned.mobileconfig
+        git commit -m "Automated update: Updated unsigned Mobileconfig" || echo "No changes to commit"
+        git push
