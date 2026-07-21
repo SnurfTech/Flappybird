@@ -109,6 +109,35 @@ jobs:
         print('Successfully bundled into bundled.html!')
         "
 
+    - name: Update Data Link
+      run: |
+        import base64
+        import re
+
+        # 1. Read and base64-encode the payload (without line breaks, matching -w 0)
+        with open("bundled.html", "rb") as f:
+            encoded_bytes = base64.b64encode(f.read())
+            encoded_str = encoded_bytes.decode("utf-8")
+
+        # 2. Read the target config file
+        config_path = "unsigned.mobileconfig"
+        with open(config_path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        # 3. Define the regex pattern and replacement
+        # Regex looks for: <string>ANYTHING</string>pattern = r"<string>.*?</string>"
+        replacement = f"<string>{encoded_str}</string><!-- DATA LINK -->"
+
+        # 4. Perform the substitution
+        new_content = re.sub(pattern, replacement, content, flags=re.DOTALL)
+
+        # 5. Overwrite the original file (in-place modification like sed -i)
+        with open(config_path, "w", encoding="utf-8") as f:
+            f.write(new_content)
+
+        print("Successfully updated unsigned.mobileconfig!")
+        #sed -i "s|      <string>.*</string><!-- DATA LINK -->|      <string>$(cat bundled.html | base64 -w 0)</string><!-- DATA LINK -->|g" unsigned.mobileconfig
+
     # 4. Commit and overwrite the root file
     - name: Commit Unsigned Profile
       run: |
