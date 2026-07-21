@@ -7,7 +7,7 @@ permissions:
   contents: write
 
 jobs:
-  sign:
+  update:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Code
