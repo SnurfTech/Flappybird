@@ -1,0 +1,132 @@
+#page title
+page_title                                : Flappybird                                          # Automatically populates with app name if not set and if iOS app ID is set. Otherwise enter manually.
+
+# App Info
+ios_app_id                                :                                # Required. Enter iOS app ID to automatically populate name, price and icons (e.g. 718043190).
+ios_app_country                           :                                        # Required outside USA. Enter 2 letter country code as in https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+
+appstore_link                             :                                           # Automatically populates if not set and if iOS app ID is set. Otherwise enter manually.
+playstore_link                            :                                           # Enter Google Play Store URL.
+presskit_download_link                    :                                           # Enter a link to downloadable file or (e.g. public Dropbox link to a .zip file). 
+                                                                                      # Or upload your press kit file to assets and set path accordingly (e.g. "assets/your_press_kit.zip").
+
+app_icon                                  : assets/appicon.png                      # Automatically populates if not set and if iOS app ID is set.  Otherwise enter path to icon file manually.
+app_name                                  : Flappybird                                          # Automatically populates if not set and if iOS app ID is set.  Otherwise enter manually.
+app_price                                 :                                           # Automatically populates if not set and if iOS app ID is set.  Otherwise enter manually.
+app_description                           : "A version of https://github.com/aaarafat/JS-Flappy-Bird but as an iOS app. Full credit goes to them for this project. I am also not affiliated with the original creator of this Flappybird project at all."
+
+enable_smart_app_banner                   : false                                      # Set to true to show a smart app banner at top of page on mobile devices.
+
+
+
+# Information About Yourself
+your_name                                 : SnurfTech                                
+your_link                                 : https://snurftech.com                     
+your_city                                 : somewhere                                
+email_address                             :
+linkedin_username                         :                                           
+linkedin_company                          :                                           
+facebook_username                         :                                           
+instagram_username                        :
+twitter_username                          : 
+github_username                           : 
+youtube_username                          :
+mastodon_link                             : 
+
+
+
+# Feature List                            Edit, add or remove features to be presented.
+features                                  :
+
+  - title                                 : One-Tap Controls
+    description                           : Just tap your screen or press space on your keyboard make your bird flap upwards.
+    fontawesome_icon_name                 : fingerprint
+    
+  - title                                 : Not on the App Store
+    description                           : "This app is installed via a mobileconfig. Apple can't remove this app from the App Store if it isn't even there!"
+    fontawesome_icon_name                 : store
+
+  - title                                 : Offline Support
+    description                           : No internet is required to use Flappybird once you have it installed.
+    fontawesome_icon_name                 : wifi
+
+  - title                                 : Keyboard Support
+    description                           : Instead of tapping on your screen to fly your bird, you can also use your space key.
+    fontawesome_icon_name                 : keyboard
+
+  - title                                 : High Score Tracking
+    description                           : Saves your personal best locally so you can constantly beat your own record.
+    fontawesome_icon_name                 : mountain
+  
+  - title                                 : Quick Restart Button
+    description                           : Minimal downtime between runs so you can dive right back into the world of infinite pipes.
+    fontawesome_icon_name                 : arrow-rotate-right
+
+  - title                                 : Completely Free
+    description                           : Just like the original Flappybird, this app is completely free.
+    fontawesome_icon_name                 : dollar-sign
+
+
+# Theme Settings
+topbar_color                              : "#000000"
+topbar_transparency                       : 0.1
+topbar_title_color                        : "#ffffff"
+
+cover_image                               : assets/headerimage.png                    # Replace with alternative image path or image URL.
+cover_overlay_color                       : "#363b3d"
+cover_overlay_transparency                : 0.8
+
+device_color                              : black                                     # Set to: blue, black, yellow, coral or white.
+
+body_background_color                     : "#ffffff"
+
+link_color                                : "#1d63ea"
+
+app_title_color                           : "#ffffff"
+app_price_color                           : "#ffffff"
+app_description_color                     : "#ffffff"
+
+feature_title_color                       : "#000000"
+feature_text_color                        : "#666666"
+
+feature_icons_foreground_color            : "#1d63ea"
+feature_icons_background_color            : "#e6e6e6"
+
+social_icons_foreground_color             : "#666666"
+social_icons_background_color             : "#e6e6e6"
+
+footer_text_color                         : "#666666"
+
+
+
+
+
+
+
+
+
+
+
+
+
+####################################################
+### Jekyll Configuration. No need to touch this. ###
+####################################################
+
+# Set the Sass partials directory, as we're using @imports
+sass:
+  style: :compressed # You might prefer to minify using :compressed
+
+# Exclude these files from your production _site
+exclude:
+  - LICENSE
+  - README.md
+  - CNAME
+
+collections:
+  pages:
+    output: true
+    permalink: /:path/
+
+# Markdown rendering
+markdown: kramdown

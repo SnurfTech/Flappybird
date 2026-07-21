@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" 
+    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>FullScreen</key>
+      <true/>
+      <key>Icon</key>
+      <data></data>
+      <key>IsRemovable</key>
+      <true/>
+      <key>Label</key>
+      <string>Flappybird</string>
+      <key>PayloadDescription</key>
+      <string>Adds a web clip to the Home Screen</string>
+      <key>PayloadDisplayName</key>
+      <string>Flappybird</string>
+      <key>PayloadIdentifier</key>
+      <string>com.snurftech.flappybird.webclip</string>
+      <key>PayloadType</key>
+      <string>com.apple.webClip.managed</string>
+      <key>PayloadUUID</key>
+      <string>e2547afd-6f76-4020-bda4-a7a94159e9d2</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>Precomposed</key>
+      <true/>
+      <key>URL</key>
+      <string>INSERT_DATA_LINK</string>
+    </dict>
+  </array>
+  <key>PayloadDescription</key>
+  <string>Installs a web clip on the Home Screen</string>
+  <key>PayloadDisplayName</key>
+  <string>Flappybird</string>
+  <key>PayloadIdentifier</key>
+  <string>com.snurftech.flappybird</string>
+  <key>PayloadOrganization</key>
+  <string>SnurfTech</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>ec935a6c-0b5a-401a-8598-a566ca9024b9</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>
