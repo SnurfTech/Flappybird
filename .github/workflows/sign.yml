@@ -1,7 +1,7 @@
 name: Generate and Sign MobileConfig
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 permissions:
   contents: write
