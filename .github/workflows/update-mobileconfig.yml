@@ -111,6 +111,7 @@ jobs:
 
     - name: Update Data Link
       run: |
+        python -c '
         import base64
         import re
 
@@ -136,6 +137,7 @@ jobs:
             f.write(new_content)
 
         print("Successfully updated unsigned.mobileconfig!")
+        '
         #sed -i "s|      <string>.*</string><!-- DATA LINK -->|      <string>$(cat bundled.html | base64 -w 0)</string><!-- DATA LINK -->|g" unsigned.mobileconfig
 
     # 4. Commit and overwrite the root file
