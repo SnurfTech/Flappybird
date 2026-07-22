@@ -54,9 +54,9 @@ features                                  :
     description                           : Instead of tapping on your screen to fly your bird and restart, you can also use your space key.
     fontawesome_icon_name                 : keyboard
 
-  - title                                 : High Score Tracking
-    description                           : Saves your personal best locally so you can constantly beat your own record.
-    fontawesome_icon_name                 : mountain
+#  - title                                 : High Score Tracking
+#    description                           : Saves your personal best locally so you can constantly beat your own record.
+#    fontawesome_icon_name                 : mountain
   
   - title                                 : Quick Restart Function
     description                           : Minimal downtime between runs so you can dive right back into the world of infinite pipes. Just tap the screen to restart!
