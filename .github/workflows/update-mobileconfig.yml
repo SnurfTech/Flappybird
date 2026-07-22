@@ -115,7 +115,7 @@ jobs:
     - name: Update Data Link
       run: |
         cd JS-Flappy-Bird
-        python -c "import base64,re; d=base64.b64encode(open('bundled.html','rb').read()).decode(); f='../unsigned.mobileconfig'; s=open(f,'r',encoding='utf-8').read(); s=re.sub(r'      <string>.*</string><!-- DATA LINK -->', f'      <string>{d}</string><!-- DATA LINK -->', s); open(f,'w',encoding='utf-8').write(s)"
+        python -c "import base64,re; d=base64.b64encode(open('bundled.html','rb').read()).decode(); f='../unsigned.mobileconfig'; s=open(f,'r',encoding='utf-8').read(); s=re.sub(r'      <string>.*</string><!-- DATA LINK -->', f'      <string>data:text/html;base64,{d}</string><!-- DATA LINK -->', s); open(f,'w',encoding='utf-8').write(s)"
         #sed -i "s|      <string>.*</string><!-- DATA LINK -->|      <string>$(cat bundled.html | base64 -w 0)</string><!-- DATA LINK -->|g" unsigned.mobileconfig
 
     # 4. Commit and overwrite the root file
