@@ -60,7 +60,7 @@ features                                  :
   
   - title                                 : Quick Restart Function
     description                           : Minimal downtime between runs so you can dive right back into the world of infinite pipes. Just tap the screen to restart!
-    fontawesome_icon_name                 : face-grin
+    fontawesome_icon_name                 : arrow-rotate-right
 
   - title                                 : Completely Free
     description                           : Just like the original Flappybird, this app is completely free.
