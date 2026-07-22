@@ -1,7 +1,7 @@
 name: Generate and Sign MobileConfig
 on:
   workflow_run:
-    workflows: ["update-mobileconfig"]  # Exact name of Workflow 1
+    workflows: ["Update Mobileconfig"]  # Exact name of Workflow 1
     types:
       - completed
 
