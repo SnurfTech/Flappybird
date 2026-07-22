@@ -39,7 +39,7 @@ mastodon_link                             :
 features                                  :
 
   - title                                 : One-Tap Controls
-    description                           : Just tap your screen or press space on your keyboard make your bird flap upwards.
+    description                           : Just tap your screen to make your bird flap upwards.
     fontawesome_icon_name                 : fingerprint
     
   - title                                 : Not on the App Store
@@ -47,19 +47,19 @@ features                                  :
     fontawesome_icon_name                 : store
 
   - title                                 : Offline Support
-    description                           : No internet is required to use Flappybird once you have it installed.
+    description                           : No internet is required to play Flappybird once you have it installed.
     fontawesome_icon_name                 : wifi
 
   - title                                 : Keyboard Support
-    description                           : Instead of tapping on your screen to fly your bird, you can also use your space key.
+    description                           : Instead of tapping on your screen to fly your bird and restart, you can also use your space key.
     fontawesome_icon_name                 : keyboard
 
   - title                                 : High Score Tracking
     description                           : Saves your personal best locally so you can constantly beat your own record.
     fontawesome_icon_name                 : mountain
   
-  - title                                 : Quick Restart Button
-    description                           : Minimal downtime between runs so you can dive right back into the world of infinite pipes.
+  - title                                 : Quick Restart Function
+    description                           : Minimal downtime between runs so you can dive right back into the world of infinite pipes. Just tap the screen to restart!
     fontawesome_icon_name                 : face-grin
 
   - title                                 : Completely Free
