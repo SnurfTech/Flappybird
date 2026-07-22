@@ -30,25 +30,18 @@ jobs:
             box-sizing: border-box;
         }
 
-        body {
-            background-color: #333; /* Dark background letterboxing */
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden; /* Prevents scrollbars */
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
         }
 
         #canvas {
-            /* Set display size to fill screen while preserving aspect ratio */
-            max-width: 100vw;
-            max-height: 100vh;
-            width: auto;
+            display: block;
+            width: 100vw;
             height: 100vh;
-            object-fit: contain;
-
-            /* Crisp pixel rendering for low-res pixel art/sprites */
+            /* Keeps pixel art sharp when scaled up */
             image-rendering: pixelated;
             image-rendering: crisp-edges;
         }
@@ -91,6 +84,9 @@ jobs:
         ' <(base64 -w 0 "$i") game.js > temp.js && mv temp.js game.js
         done
         #sed -i "s|<script src=\"game.js\"></script>|<script>$(cat game.js)</script>|g" bundled.html
+        perl -i -pe 's/const sctx = scrn\.getContext\("2d"\);/$&\nconst GAME_HEIGHT = 414;\nfunction resizeGame() { scrn.height = GAME_HEIGHT; scrn.width = GAME_HEIGHT * (window.innerWidth \/ window.innerHeight); sctx.imageSmoothingEnabled = false; }\nwindow.addEventListener("resize", resizeGame);\nresizeGame();/' game.js
+        perl -i -pe 's/sctx\.drawImage\(this\.sprite, this\.x, y\);/for (let x = 0; x < scrn.width; x += this.sprite.width) { sctx.drawImage(this.sprite, x, y); }/' game.js
+        perl -i -pe 's/sctx\.drawImage\(this\.sprite, this\.x, this\.y\);/for (let x = this.x; x < scrn.width + this.sprite.width; x += this.sprite.width) { sctx.drawImage(this.sprite, x, this.y); }/' game.js
         python3 -c "
         import os
 
