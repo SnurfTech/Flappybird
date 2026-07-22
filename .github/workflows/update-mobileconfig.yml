@@ -120,7 +120,7 @@ jobs:
 
     - name: Update Icon Data
       run: |
-        python -c "import base64,re; d=base64.b64encode(open('assets/appicon.png','rb').read()).decode(); f='unsigned.mobileconfig'; s=open(f,'r',encoding='utf-8').read(); s=re.sub(r'      <data>.*</data>', f'      <data>data:image/png;base64,{d}</data>', s); open(f,'w',encoding='utf-8').write(s)"
+        python -c "import base64,re; d=base64.b64encode(open('assets/appicon.png','rb').read()).decode(); f='unsigned.mobileconfig'; s=open(f,'r',encoding='utf-8').read(); s=re.sub(r'      <data>.*</data>', f'      <data>{d}</data>', s); open(f,'w',encoding='utf-8').write(s)"
 
     # 4. Commit and overwrite the root file
     - name: Commit Unsigned Profile
