@@ -22,7 +22,7 @@ jobs:
     # 2. Package and cryptographically sign your unsigned file
     - name: Replace style.css
       run: |
-        pwd
+        cd JS-Flappy-Bird
         cat << EOF > style.css
         * {
             margin: 0;
@@ -57,6 +57,7 @@ jobs:
     # 3. Securely erase the temporary signing keys from the runner
     - name: Create squada_one.css
       run: |
+        cd JS-Flappy-Bird
         cat << EOF > squada_one.css
         /* latin */
         @font-face {
@@ -71,6 +72,7 @@ jobs:
 
     - name: Generate bundled HTML file
       run: |
+        cd JS-Flappy-Bird
         cp index.html bundled.html
         #sed -i "s|<link rel=\"stylesheet\" href=\"style.css\" >|<style>$(cat style.css)</style>|g" bundled.html
         awk 'NR==FNR{css=css $0 "\n"; next} {gsub(/<link rel="stylesheet" href="style.css" >/, "<style>\n" css "</style>")} 1' style.css bundled.html > temp.html && mv temp.html bundled.html
@@ -112,7 +114,8 @@ jobs:
 
     - name: Update Data Link
       run: |
-        python -c "import base64,re; d=base64.b64encode(open('bundled.html','rb').read()).decode(); f='unsigned.mobileconfig'; s=open(f,'r',encoding='utf-8').read(); s=re.sub(r'      <string>.*</string><!-- DATA LINK -->', f'      <string>{d}</string><!-- DATA LINK -->', s); open(f,'w',encoding='utf-8').write(s)"
+        cd JS-Flappy-Bird
+        python -c "import base64,re; d=base64.b64encode(open('bundled.html','rb').read()).decode(); f='../unsigned.mobileconfig'; s=open(f,'r',encoding='utf-8').read(); s=re.sub(r'      <string>.*</string><!-- DATA LINK -->', f'      <string>{d}</string><!-- DATA LINK -->', s); open(f,'w',encoding='utf-8').write(s)"
         #sed -i "s|      <string>.*</string><!-- DATA LINK -->|      <string>$(cat bundled.html | base64 -w 0)</string><!-- DATA LINK -->|g" unsigned.mobileconfig
 
     # 4. Commit and overwrite the root file
