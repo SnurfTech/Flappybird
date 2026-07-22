@@ -22,6 +22,7 @@ jobs:
     # 2. Package and cryptographically sign your unsigned file
     - name: Replace style.css
       run: |
+        pwd
         cat << EOF > style.css
         * {
             margin: 0;
