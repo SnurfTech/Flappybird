@@ -13,7 +13,8 @@ presskit_download_link                    :                                     
 app_icon                                  : assets/appicon.png                      # Automatically populates if not set and if iOS app ID is set.  Otherwise enter path to icon file manually.
 app_name                                  : Flappybird                                          # Automatically populates if not set and if iOS app ID is set.  Otherwise enter manually.
 app_price                                 :                                           # Automatically populates if not set and if iOS app ID is set.  Otherwise enter manually.
-app_description                           : "A version of https://github.com/aaarafat/JS-Flappy-Bird but as an iOS app. Full credit goes to them for this project. I am also not affiliated with the original creator of this Flappybird project at all."
+app_description                           : "A version of https://github.com/aaarafat/JS-Flappy-Bird but as an iOS app. Almost all credit should go to them for this project. I am also not affiliated with this person in any way.
+"
 
 enable_smart_app_banner                   : false                                      # Set to true to show a smart app banner at top of page on mobile devices.
 
