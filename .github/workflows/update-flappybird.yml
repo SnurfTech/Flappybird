@@ -104,6 +104,7 @@ jobs:
         open('bundled.html', 'w').write(html)
         print('Successfully bundled into bundled.html!')
         "
+        perl -i -0777 -pe 's/<\/body>/  <script>\n    if ("serviceWorker" in navigator) {\n      window.addEventListener("load", () => {\n        navigator.serviceWorker.register(".\/sw.js")\n          .then(() => console.log("Game cached for offline play!"))\n          .catch((err) => console.log("Service Worker failed:", err));\n      });\n    }\n  <\/script>\n$&/i' bundled.html
 
     - name: Update Data Link
       run: |
