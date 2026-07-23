@@ -1,0 +1,125 @@
+name: Update Flappybird
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # 1. Create a secure, independent local signing pair customized to YOU
+    - name: Cloning into https://github.com/aaarafat/JS-Flappy-Bird
+      run: |
+        git clone https://github.com/aaarafat/JS-Flappy-Bird
+        cd JS-Flappy-Bird
+
+    # 2. Package and cryptographically sign your unsigned file
+    - name: Replace style.css
+      run: |
+        cd JS-Flappy-Bird
+        cat << EOF > style.css
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        #canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+        EOF
+
+    # 3. Securely erase the temporary signing keys from the runner
+    - name: Create squada_one.css
+      run: |
+        cd JS-Flappy-Bird
+        cat << EOF > squada_one.css
+        /* latin */
+        @font-face {
+          font-family: 'Squada One';
+          font-style: normal;
+          font-weight: 400;
+          font-display: swap;
+          src: url('data:font/woff2;base64,$(curl -sL https://fonts.gstatic.com/s/squadaone/v20/BCasqZ8XsOrx4mcOk6Mtaac2WQ.woff2 | base64 -w 0)') format('woff2');
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        EOF
+
+    - name: Generate Bundled HTML File and Patch Files
+      run: |
+        cd JS-Flappy-Bird
+        cp index.html bundled.html
+        #sed -i "s|<link rel=\"stylesheet\" href=\"style.css\" >|<style>$(cat style.css)</style>|g" bundled.html
+        awk 'NR==FNR{css=css $0 "\n"; next} {gsub(/<link rel="stylesheet" href="style.css" >/, "<style>\n" css "</style>")} 1' style.css bundled.html > temp.html && mv temp.html bundled.html
+        #sed -i "s|<link href=\"https://fonts.googleapis.com/css?family=Squada+One&display=swap\" rel=\"stylesheet\">|<style>$(cat squada_one.css)</style>|g" bundled.html
+        awk 'NR==FNR{css=css $0 "\n"; next} {gsub(/<link href="https:\/\/fonts\.googleapis\.com\/css\?family=Squada\+One&display=swap" rel="stylesheet">/, "<style>\n" css "</style>")} 1' squada_one.css bundled.html > temp.html && mv temp.html bundled.html
+        for i in $(cat game.js | grep -oP '\.src = "[A-z]+/.*";' | cut -d ' ' -f3 | tr -d '"' | tr -d ';'); do
+                if [[ $(echo $i | cut -d '.' -f2) == "png" ]]; then
+                        MIME="image/png"
+                else
+                        MIME="audio/wav"
+                fi
+                #sed -i "s|$i|data:$MIME;base64,$(base64 -w 0 $i)|g" game.js
+                awk -v target="$i" -v mime="$MIME" '
+          NR==FNR { b64=b64 $0; next }
+          { gsub(target, "data:" mime ";base64," b64) }1
+        ' <(base64 -w 0 "$i") game.js > temp.js && mv temp.js game.js
+        done
+        #sed -i "s|<script src=\"game.js\"></script>|<script>$(cat game.js)</script>|g" bundled.html
+        perl -i -pe 's/const sctx = scrn\.getContext\("2d"\);/$&\nconst GAME_HEIGHT = 414;\nfunction resizeGame() { scrn.height = GAME_HEIGHT; scrn.width = GAME_HEIGHT * (window.innerWidth \/ window.innerHeight); sctx.imageSmoothingEnabled = false; }\nwindow.addEventListener("resize", resizeGame);\nresizeGame();/' game.js
+        perl -i -pe 's/sctx\.drawImage\(this\.sprite, this\.x, y\);/for (let x = 0; x < scrn.width; x += this.sprite.width) { sctx.drawImage(this.sprite, x, y); }/' game.js
+        perl -i -pe 's/sctx\.drawImage\(this\.sprite, this\.x, this\.y\);/for (let x = this.x; x < scrn.width + this.sprite.width; x += this.sprite.width) { sctx.drawImage(this.sprite, x, this.y); }/' game.js
+        python3 -c "
+        import os
+
+        # Read asset files safely
+        css = open('style.css').read() if os.path.exists('style.css') else ''
+        fonts = open('squada_one.css').read() if os.path.exists('squada_one.css') else ''
+        js = open('game.js').read() if os.path.exists('game.js') else ''
+
+        # Read your HTML
+        html = open('index.html').read()
+
+        # Replace targets with literal string substitution (completely safe)
+        html = html.replace('<link rel=\"stylesheet\" href=\"style.css\" >', f'<style>\n{css}\n</style>')
+        html = html.replace('<link href=\"https://fonts.googleapis.com/css?family=Squada+One&display=swap\" rel=\"stylesheet\">', f'<style>\n{fonts}\n</style>')
+        html = html.replace('<script src=\"game.js\"></script>', f'<script>\n{js}\n</script>')
+
+        # Write the final output
+        open('bundled.html', 'w').write(html)
+        print('Successfully bundled into bundled.html!')
+        "
+
+    - name: Update Data Link
+      run: |
+        rm server/index.html
+        mv JS-Flappy-Bird/bundled.html server/index.html
+
+    - name: Update Icon Data
+      run: |
+        python -c "import base64,re; d=base64.b64encode(open('assets/appicon.png','rb').read()).decode(); f='unsigned.mobileconfig'; s=open(f,'r',encoding='utf-8').read(); s=re.sub(r'      <data>.*</data>', f'      <data>{d}</data>', s); open(f,'w',encoding='utf-8').write(s)"
+
+    # 4. Commit and overwrite the root file
+    - name: Commit
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add unsigned.mobileconfig
+        git add server/index.html
+        git commit -m "Automated update: Updated unsigned Mobileconfig and Flappybird HTML" || echo "No changes to commit"
+        git push
