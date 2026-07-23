@@ -1,7 +1,9 @@
 name: Generate and Sign MobileConfig
 on:
-  push:
-    branches: [ main ]
+  workflow_run:
+    workflows: ["Update Flappybird"] # 👈 The exact name of the first workflow
+    types:
+      - completed
 
 permissions:
   contents: write
