@@ -108,7 +108,7 @@ jobs:
 
     - name: Update Data Link
       run: |
-        rm server/index.html
+        [[ -f server/index.html ]] && rm server/index.html
         mv JS-Flappy-Bird/bundled.html server/index.html
 
     - name: Update Icon Data
