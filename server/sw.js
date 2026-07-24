@@ -1,38 +1,26 @@
-// sw.js
-const CACHE_NAME = 'flappy-bird-v2'; // <--- Change version when updating files!
+const CACHE_NAME = 'flappy-bird-v1';
 
+// List all files needed for your game to run offline
 const ASSETS_TO_CACHE = [
   './',
   './index.html'
+  // Add any image or sound paths here if they are separate files (e.g., './bg.png')
 ];
 
-// Install: Cache new assets
+// Install Event: Save game files to browser cache
 self.addEventListener('install', (e) => {
-  self.skipWaiting(); // Forces active worker to take over immediately
   e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE))
-  );
-});
-
-// Activate: Delete old cache versions
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key); // Deletes old version caches
-          }
-        })
-      );
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(ASSETS_TO_CACHE);
     })
   );
-  return self.clients.claim();
 });
 
-// Fetch: Serve from cache, fallback to network
+// Fetch Event: Serve cached files when offline
 self.addEventListener('fetch', (e) => {
   e.respondWith(
-    caches.match(e.request).then((response) => response || fetch(e.request))
+    caches.match(e.request).then((response) => {
+      return response || fetch(e.request);
+    })
   );
 });
