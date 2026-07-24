@@ -109,6 +109,8 @@ jobs:
         "
         perl -i -0777 -pe 's/<\/body>/  <script>\n    if ("serviceWorker" in navigator) {\n      window.addEventListener("load", () => {\n        navigator.serviceWorker.register(".\/sw.js")\n          .then(() => console.log("Game cached for offline play!"))\n          .catch((err) => console.log("Service Worker failed:", err));\n      });\n    }\n  <\/script>\n$&/i' bundled.html        
 
+        perl -i -0777 -pe 's/frame:\s*0,/frame: 0,\n  paddingX: 5, \/\/ horizontal padding\n  paddingY: 3, \/\/ vertical padding/; s/let\s+r\s*=\s*birdSprite\.width\s*\/\s*2;/let r = birdSprite.width \/ 2;\n    let birdLeft = this.x - r + this.paddingX;\n    let birdRight = this.x + r - this.paddingX;\n    let birdTop = this.y - r + this.paddingY;\n    let birdBottom = this.y + r - this.paddingY;/; s/let\s+birdLeft\s*=\s*this\.x\s*-\s*r;\s*let\s+birdRight\s*=\s*this\.x\s*\+\s*r;\s*let\s+birdTop\s*=\s*this\.y\s*-\s*r;\s*let\s+birdBottom\s*=\s*this\.y\s*\+\s*r;//; s/this\.y\s*\+\s*r\s*>=\s*gnd\.y/this.y + r - this.paddingY >= gnd.y/g' bundled.html
+
     - name: Update Data Link
       run: |
         [[ -f server/index.html ]] && rm server/index.html
