@@ -3,8 +3,7 @@ const CACHE_NAME = 'flappy-bird-v2'; // <--- Change version when updating files!
 
 const ASSETS_TO_CACHE = [
   './',
-  './index.html',
-  './game.js'
+  './index.html'
 ];
 
 // Install: Cache new assets
