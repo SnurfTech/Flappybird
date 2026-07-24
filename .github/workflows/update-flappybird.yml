@@ -84,6 +84,9 @@ jobs:
         perl -i -pe 's/const sctx = scrn\.getContext\("2d"\);/$&\nconst GAME_HEIGHT = 414;\nfunction resizeGame() { scrn.height = GAME_HEIGHT; scrn.width = GAME_HEIGHT * (window.innerWidth \/ window.innerHeight); sctx.imageSmoothingEnabled = false; }\nwindow.addEventListener("resize", resizeGame);\nresizeGame();/' game.js
         perl -i -pe 's/sctx\.drawImage\(this\.sprite, this\.x, y\);/for (let x = 0; x < scrn.width; x += this.sprite.width) { sctx.drawImage(this.sprite, x, y); }/' game.js
         perl -i -pe 's/sctx\.drawImage\(this\.sprite, this\.x, this\.y\);/for (let x = this.x; x < scrn.width + this.sprite.width; x += this.sprite.width) { sctx.drawImage(this.sprite, x, this.y); }/' game.js
+        
+        perl -i -0777 -pe 's/collisioned: function \(\) \{[\s\S]*?\n  \},/collisioned: function () { if (!pipe.pipes.length) return; let birdSprite = this.animations[0].sprite; let r = birdSprite.width \/ 2; let birdLeft = this.x - r; let birdRight = this.x + r; let birdTop = this.y - r; let birdBottom = this.y + r; for (let i = 0; i < pipe.pipes.length; i++) { let p = pipe.pipes[i]; let pipeLeft = p.x; let pipeRight = p.x + parseFloat(pipe.top.sprite.width); let roof = p.y + parseFloat(pipe.top.sprite.height); let floor = roof + pipe.gap; if (birdRight > pipeLeft && birdLeft < pipeRight) { if (birdTop < roof || birdBottom > floor) { SFX.hit.play(); return true; } } if (this.x > pipeRight && pipe.moved) { UI.score.curr++; SFX.score.play(); pipe.moved = false; } } },/g' game.js
+        
         python3 -c "
         import os
 
