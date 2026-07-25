@@ -48,7 +48,7 @@ features                                  :
     fontawesome_icon_name                 : store
 
   - title                                 : Offline Support
-    description                           : No internet is required to play Flappybird once you have it installed and have opened it at least once.
+    description                           : No internet is required to play Flappybird once you have it installed and have opened it at least once with an internet connection.
     fontawesome_icon_name                 : wifi
 
   - title                                 : Keyboard Support
