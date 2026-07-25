@@ -111,10 +111,10 @@ jobs:
 
         perl -i -0777 -pe 's/frame:\s*0,/frame: 0,\n  paddingX: 5, \/\/ horizontal padding\n  paddingY: 3, \/\/ vertical padding/; s/let\s+r\s*=\s*birdSprite\.width\s*\/\s*2;/let r = birdSprite.width \/ 2;\n    let birdLeft = this.x - r + this.paddingX;\n    let birdRight = this.x + r - this.paddingX;\n    let birdTop = this.y - r + this.paddingY;\n    let birdBottom = this.y + r - this.paddingY;/; s/let\s+birdLeft\s*=\s*this\.x\s*-\s*r;\s*let\s+birdRight\s*=\s*this\.x\s*\+\s*r;\s*let\s+birdTop\s*=\s*this\.y\s*-\s*r;\s*let\s+birdBottom\s*=\s*this\.y\s*\+\s*r;//; s/this\.y\s*\+\s*r\s*>=\s*gnd\.y/this.y + r - this.paddingY >= gnd.y/g' bundled.html
 
-        perl -pi -e 's|(<head[^>]*>)|$1\n  <meta name="apple-mobile-web-app-capable" content="yes">|i' index.html
-        perl -pi -e 's|(<head[^>]*>)|$1\n  <meta name="apple-mobile-web-app-status-bar-style" content="default">|i' index.html
-        perl -pi -e 's|(<head[^>]*>)|$1\n  <meta name="apple-mobile-web-app-title" content="Flappybird">|i' index.html
-        perl -pi -e 's|<meta\s+name="viewport"\s+content="width=device-width,\s*initial-scale=1\.0">|<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">|i' index.html
+        perl -pi -e 's|(<head[^>]*>)|$1\n  <meta name="apple-mobile-web-app-capable" content="yes">|i' bundled.html
+        perl -pi -e 's|(<head[^>]*>)|$1\n  <meta name="apple-mobile-web-app-status-bar-style" content="default">|i' bundled.html
+        perl -pi -e 's|(<head[^>]*>)|$1\n  <meta name="apple-mobile-web-app-title" content="Flappybird">|i' bundled.html
+        perl -pi -e 's|<meta\s+name="viewport"\s+content="width=device-width,\s*initial-scale=1\.0">|<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">|i' bundled.html
 
 
     - name: Replace Old index.html File
