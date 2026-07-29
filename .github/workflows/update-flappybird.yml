@@ -87,8 +87,8 @@ jobs:
         
         perl -i -0777 -pe 's/collisioned: function \(\) \{[\s\S]*?\n  \},/collisioned: function () { if (!pipe.pipes.length) return; let birdSprite = this.animations[0].sprite; let r = birdSprite.width \/ 2; let birdLeft = this.x - r; let birdRight = this.x + r; let birdTop = this.y - r; let birdBottom = this.y + r; for (let i = 0; i < pipe.pipes.length; i++) { let p = pipe.pipes[i]; let pipeLeft = p.x; let pipeRight = p.x + parseFloat(pipe.top.sprite.width); let roof = p.y + parseFloat(pipe.top.sprite.height); let floor = roof + pipe.gap; if (birdRight > pipeLeft && birdLeft < pipeRight) { if (birdTop < roof || birdBottom > floor) { SFX.hit.play(); return true; } } if (this.x > pipeRight && pipe.moved) { UI.score.curr++; SFX.score.play(); pipe.moved = false; } } },/g' game.js
 
-        perl -i -0777 -pe 's/^/if (navigator.storage?.persist) {\n    const granted = await navigator.storage.persist();\n    console.log("Persistent storage:", granted);\n}\n\n/' game.js
-        
+        perl -i -0777 -pe 's/^/(async () => {\n  if (navigator.storage?.persist) {\n    const granted = await navigator.storage.persist();\n    console.log("Persistent storage:", granted);\n  }\n})();\n\n/' game.js
+
         python3 -c "
         import os
 
