@@ -45,10 +45,12 @@ html, body {
 <body>
     <canvas id="canvas" width="276" height="414"></canvas>
     <script>
-if (navigator.storage?.persist) {
+(async () => {
+  if (navigator.storage?.persist) {
     const granted = await navigator.storage.persist();
     console.log("Persistent storage:", granted);
-}
+  }
+})();
 
 const RAD = Math.PI / 180;
 const scrn = document.getElementById("canvas");
