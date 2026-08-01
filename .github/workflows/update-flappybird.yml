@@ -135,8 +135,4 @@ jobs:
         git add server/index.html unsigned.mobileconfig
         git commit -m "Automated update: Updated unsigned Mobileconfig and Flappybird HTML" || echo "No changes to commit"
         git pull --rebase origin main
-        for i in 1 2 3; do
-          git push origin main && break
-          echo "Push failed, retrying..."
-          sleep 5
-        done
+        git push origin main
