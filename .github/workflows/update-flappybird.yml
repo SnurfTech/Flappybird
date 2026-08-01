@@ -136,4 +136,8 @@ jobs:
         git add server/index.html
         git commit -m "Automated update: Updated unsigned Mobileconfig and Flappybird HTML" || echo "No changes to commit"
         git pull --rebase origin main
-        git push origin main
+        for i in 1 2 3; do
+          git push origin main && break
+          echo "Push failed, retrying..."
+          sleep 5
+        done
