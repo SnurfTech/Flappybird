@@ -48,4 +48,8 @@ jobs:
         git add signed.mobileconfig
         git commit -m "Automated update: Fixed syntax and generated profile" || echo "No changes to commit"
         git pull --rebase origin main
-        git push origin main
+        for i in 1 2 3; do
+          git push origin main && break
+          echo "Push failed, retrying..."
+          sleep 5
+        done
