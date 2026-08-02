@@ -132,7 +132,9 @@ jobs:
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git stash
         git pull --rebase origin main
+        git stash pop
         git add server/index.html unsigned.mobileconfig
         git commit -m "Automated update: Updated unsigned Mobileconfig and Flappybird HTML" || echo "No changes to commit"
         git push origin main
